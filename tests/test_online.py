@@ -1,7 +1,6 @@
-import line_sdk
+from line_pay.client import SandboxClient
 from .utils import create_orderId
-
-credentials = {}
+from .credentials import CREDENTIALS
 
 
 def create_request_data():
@@ -33,8 +32,8 @@ def create_request_data():
     )
 
 
-def test_request(self):
-    client = line_sdk.Client(**credentials)
+def test_request():
+    client = SandboxClient(**CREDENTIALS)
     data = create_request_data()
     rtn = client.pay.online.request(**data)
 

@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name='linepay',
+    name='line_pay',
     version='0.1.0',
     author='Pochang Lee',
     author_email='stupidgod08@yahoo.com.tw',

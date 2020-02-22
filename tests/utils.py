@@ -6,3 +6,5 @@ def create_orderId():
 
     ts = time.time()
     return str(int(ts * 1000))
+
+CREDENTIALS = {}
