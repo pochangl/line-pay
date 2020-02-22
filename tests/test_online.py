@@ -1,5 +1,6 @@
+import json
 from line_pay.client import SandboxClient
-from .utils import create_orderId
+from .utils import create_orderId, patch_request
 from .credentials import CREDENTIALS
 
 
@@ -31,7 +32,8 @@ def create_request_data():
     )
 
 
-def test_request():
+def test_request_and_status_api():
+    ' test request api and status api'
     client = SandboxClient(**CREDENTIALS)
     data = create_request_data()
     rtn = client.request(**data)
@@ -42,3 +44,15 @@ def test_request():
     status = client.status(transactionId=transactionId)
 
     assert status['returnCode'] == '0000'
+
+
+@patch_request
+def test_confirm_api():
+    client = SandboxClient(**CREDENTIALS)
+    data = client.confirm(transactionId=3, currency='TWD', amount=300)
+    assert data['url'] == '{}/v3/payments/3/confirm'.format(client.host)
+    assert json.loads(data['data']) == {
+        'currency': 'TWD',
+        'amount': 300
+    }
+    assert data['headers']
