@@ -17,7 +17,6 @@ def create_request_data():
                 name='package1',
                 products=[
                     dict(
-                        id=2,
                         name='product2',
                         price=50,
                         quantity=2
@@ -35,11 +34,11 @@ def create_request_data():
 def test_request():
     client = SandboxClient(**CREDENTIALS)
     data = create_request_data()
-    rtn = client.pay.online.request(**data)
+    rtn = client.request(**data)
 
     assert rtn['returnCode'] == '0000', rtn
 
     transactionId = rtn['info']['transactionId']
-    status = client.pay.online.status(transactionId=transactionId)
+    status = client.status(transactionId=transactionId)
 
     assert status['returnCode'] == '0000'

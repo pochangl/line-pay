@@ -1,11 +1,14 @@
 class API:
     endpoint = ''
 
-    def __ini__(self, client):
+    def __init__(self, client):
         self.client = client
 
+    def __call__(self, **kwargs):
+        return self.send(**kwargs)
+
     def get_endpoint(self, **data):
-        return self.endpoint.format(data)
+        return self.endpoint.format(**data)
 
     def post(self, data, kwargs={}):
         return self.client.post(url=self.get_endpoint(**kwargs), data=data)
@@ -21,7 +24,7 @@ class RequestAPI(API):
 
     def send(
             self, orderId: str, amount: int, currency: str,
-            packages: list, redirectUrls: dict, options: dict):
+            packages: list, redirectUrls: dict, options: dict={}):
 
         data = dict(
             orderId=orderId,
